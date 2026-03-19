@@ -1,0 +1,23 @@
+export default function handler(req, res) {
+  const { number, key } = req.query;
+
+  if (key !== "MONU_API") {
+    return res.status(403).json({ error: "Invalid API Key" });
+  }
+
+  if (!number) {
+    return res.status(400).json({ error: "Number required" });
+  }
+
+  const database = [
+    { number: "6206789765", name: "Rahul", state: "Bihar", sim: "Jio" }
+  ];
+
+  const result = database.find(n => n.number === number);
+
+  if (result) {
+    res.json({ status: "success", data: result });
+  } else {
+    res.json({ status: "not_found" });
+  }
+}
